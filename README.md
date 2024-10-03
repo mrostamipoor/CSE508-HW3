@@ -5,7 +5,7 @@ in Go using the GoPacket library, and should support just plain (UDP) DNS
 traffic over port 53.
 
 
-Part 1 (30%):
+Part 1:
 
 The DNS packet injector you are going to develop, named 'dnspoison', captures
 the traffic from a network interface in promiscuous mode, and injects forged
@@ -42,7 +42,7 @@ accepted and processed normally by the victim. Failure to win the race will
 not affect your grade, but you should at least try (see hints below).
 
 
-Part 2 (70%):
+Part 2:
 
 The DNS poisoning attack detector you are going to develop, named 'dnsdetect',
 captures the traffic from a network interface in promiscuous mode and detects
@@ -71,64 +71,4 @@ go run dnsdetect.go [-i interface] [-r tracefile] expression
 monitored.
 
 Once an attack is detected, dnsdetect should print to stdout a detailed alert
-containing a printout of both the spoofed and legitimate responses. You can
-format the output in any way you like. The output must contain the DNS
-transaction ID, the attacked domain name, and the original and malicious IP
-addresses - for example:
-
-20210309-15:08:49.205618  DNS poisoning attempt 
-TXID 0x5cce Request www.example.com
-Answer1 [List of IP addresses]
-Answer2 [List of IP addresses]
-
-For both dnspoison and dnsdetect, feel free to use parts or build upon the
-code of your 'mydump' tool from Homework 2.
-
-
-What to submit:
-
-A tarball (.tar.gz) with:
-1) all required source code files
-2) a pcap trace containing one or more successful poisoning attacks generated
-   using your dnspoison tool
-3) a short report (ASCII text file is fine) with a brief description of your
-   programs, the strategy you followed for DNS poisoning detection, and the
-   output of your dnsdetect tool when fed with the above pcap trace
-
-
-Hints
-
-- Mind your spoofed packet's header fields and checksums!
-
-- Think about what fields should remain the same or may differ between the
-  spoofed and actual response packets.
-
-- An easy way to test your implementation is using two hosts: the attacker can
-  be either your real machine or a VM, and the victim can be a different VM.
-  In both cases, the attacker will be in a position to sniff the victim's
-  traffic and inject packets towards the victim, i.e., perform a
-  man-on-the-side attack. Alternatively, you can also use ARP spoofing to
-  perform a man-in-the-middle attack.
-
-- Don't forget to disable DoH/DoT, if it is enabled in the victim's browser.
-
-- If your host OS is configured to use a fast DNS server (e.g., Google's
-  8.8.8.8), these tend to have a very low RTT of just 3-4ms, so reliably
-  winning the race will require carefully tuned code. Try ping'ing the DNS
-  server to observe its RTT. To win the race more easily and reliably, you can
-  pick a server that is "far away", e.g., 30-40ms away. Here is a list of free
-  public DNS servers: https://twitgoo.com/best-free-dns-servers/ - many of
-  them have very low latency from SBU, but there are some in the 30-40ms range
-  (e.g., Alternate DNS, OpenNIC, SmartViper) so your attack should be reliable
-  using those. Yandex or puntCAT should be even easier, as they are in the
-  100ms range.
-
-- If you still cannot win the race in your setup, for testing purposes you can
-  "slow down" or drop the incoming legitimate responses (e.g., using
-  NetfilterQueue or any other method you prefer). Failure to win the race will
-  not affect your grade, but the spoofed response should be correct and
-  accepted by the victim (if it would arrive first).
-
-- Some useful examples related to sending raw packets with GoPacket:
-  https://github.com/google/gopacket/blob/master/examples/pcaplay/main.go
-  https://github.com/google/gopacket/blob/master/examples/arpscan/arpscan.go
+containing a printout of both the spoofed and legitimate responses. 
