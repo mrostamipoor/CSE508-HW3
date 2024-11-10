@@ -1,4 +1,6 @@
-# CSE508-HW3
+# Network Security Project: CSE508-HW3
+
+# Description
 In this assignment you will develop 1) an on-path DNS poisoning attack tool,
 and 2) a passive DNS poisoning attack detector. Both tools should be developed
 in Go using the GoPacket library, and should support just plain (UDP) DNS
